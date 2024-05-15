@@ -1,12 +1,12 @@
 package tree
 
 import (
-	"file-viewer/domain/tree"
+	"file-viewer/services/tree"
 
 	"github.com/gin-gonic/gin"
 )
 
-func Tree(c *gin.Context) {
-	var dir tree.Directory
-	c.BindJSON(&dir)
+func Root(c *gin.Context) {
+	response := tree.Tree("")
+	c.IndentedJSON(200, response)
 }
