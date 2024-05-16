@@ -1,27 +1,40 @@
 package tree
 
-// TODO: Por ahora vamos a usar una clase para ambos tipos de archivos, luego vamos a implementar una
-// clase especifica para c/u
-// type FileClass struct {
-// 	Name string `json:"name"`
-// 	Type string `json:"type"`
-// 	Size int64  `json:"size"`
-// }
+import (
+	"log"
+	"os"
+)
 
-// type DirectoryClass struct {
-// 	Path string `json:"path"`
-// 	Name string `json:"name"`
-// }
+type Directory struct {
+	Path   string  `json:"Path"`
+	Entrys []Entry `json:"entrys"`
+}
 
-// type Tree struct {
-// 	Path string
-// }
+type Entry struct {
+	Name  string `json:"name"`
+	IsDir bool   `json:"isDir"`
+}
 
-// func (t *Tree) MoveTo(d DirectoryClass) {
+func (t *Directory) Start() {
+	t.Path = os.Getenv("HOME")
+	t.update()
+}
 
-// }
+func (t *Directory) MoveDir(dir string) {
+	t.Path = t.Path + "/" + dir
+	log.Println(t.Path)
+	t.update()
+}
 
-type EntryClass struct {
-	Name string `json:"name"`
-	Type string `json:"type"`
+func (t *Directory) update() { // private class method if first letter lowercase
+	t.Entrys = nil
+	e, err := os.ReadDir(t.Path)
+	if err != nil {
+		return
+	}
+	for _, i := range e {
+		if i.Name()[0] != '.' {
+			t.Entrys = append(t.Entrys, Entry{Name: i.Name(), IsDir: i.IsDir()})
+		}
+	}
 }

@@ -7,5 +7,6 @@ import (
 )
 
 func MapUrls(engine *gin.Engine) {
-	engine.GET("/", tree.Root)
+	engine.GET("/", tree.StreamFiles)
+	engine.GET("/:dir", tree.MoveTo)
 }
