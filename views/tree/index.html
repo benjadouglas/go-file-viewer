@@ -1,11 +1,38 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8" />
+        <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Your Page Title</title>
+        <title>file-viewer</title>
+        <link rel="icon" href="data:," />
+        <script
+            src="https://unpkg.com/htmx.org@1.9.12/dist/htmx.js"
+            integrity="sha384-qbtR4rS9RrUMECUWDWM2+YGgN3U4V4ZncZ0BvUcg9FGct0jqXz3PUdVpU1p0yrXS"
+            crossorigin="anonymous"
+        ></script>
     </head>
     <body>
-        <!-- Your content goes here -->
+        <button
+            hx-get="/up"
+            hx-trigger="click"
+            hx-target="hitme"
+            hx-swap="innerHTML"
+        >
+            back
+        </button>
+        <div id="hitme">
+            <h2>{{ .Path }}</h2>
+            {{ range .Entrys}}
+            <button
+                hx-get="/{{.Name}}"
+                hx-trigger="click"
+                hx-target="#hitme"
+                hx-swap="innerHTML"
+            >
+                {{ .Name }}
+            </button>
+            <br />
+            {{ end }}
+        </div>
     </body>
 </html>

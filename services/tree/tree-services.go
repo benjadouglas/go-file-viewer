@@ -4,6 +4,8 @@ import (
 	"file-viewer/domain/tree"
 )
 
+// TODO: move the Directory struct here
+
 func StreamFiles(d *tree.Directory) tree.Directory {
 	d.Start()
 	return *d
